@@ -5,12 +5,13 @@ export class ApiRepository {
         this.apis = ApiRecord();
     }
 
-    async searchWithFilters({updatedYear, protocols, category, rating, compare} = {}) {
+    async searchWithFilters({updatedYear, protocols, category, tags, rating, compare} = {}) {
         try {
             const result = await this.apis.find({
                 updatedYear: updatedYear, // TODO
                 protocols: protocols,
                 category: category,
+                tags: {$search: tags},
                 rating: {compare: rating}}); // TODO
             console.log('[API REPOSITORY] operation=searchWithFilters; status=success');
             return result.toJSON();

@@ -1,10 +1,12 @@
-import express, {json} from "express";
+import express from "express";
 import {ApiRepository} from "../db/repository/api-repository.js";
 import {MashupRepository} from "../db/repository/mashup-repository.js";
 
 export function makeSearchApiRouter() {
 
     const router = express.Router();
+    router.use(express.json());
+
     const apiRepository = new ApiRepository();
     const mashupRepository = new MashupRepository();
 
@@ -15,7 +17,7 @@ export function makeSearchApiRouter() {
             const {updatedYear, protocols, category, rating, tags} = req.query;
 
             const searchResults = apiRepository.searchWithFilters(
-                {updatedYear, protocols, category, rating, compare}
+                {updatedYear, protocols, category, tags, rating, compare}
             )
             console.log(`[SEARCH API] operation=/GET/api; query=${req.query}; results=${searchResults.length}`);
             res.status(200).json(searchResults);
