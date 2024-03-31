@@ -14,7 +14,7 @@ export function makeSearchApiRouter() {
 
     router.get('/api', (req, res) => {
         try {
-            const {updatedYear, protocols, category, rating, tags} = req.query;
+            const {updatedYear, protocols, category, tags, rating, compare} = req.query;
 
             const searchResults = apiRepository.searchWithFilters(
                 {updatedYear, protocols, category, tags, rating, compare}

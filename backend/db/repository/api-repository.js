@@ -7,12 +7,16 @@ export class ApiRepository {
 
     async searchWithFilters({updatedYear, protocols, category, tags, rating, compare} = {}) {
         try {
+            let compareOpp = "$" + compare;
+            let comparison = {};
+            comparison[compareOpp] = rating;
+
             const result = await this.apis.find({
-                updatedYear: updatedYear, // TODO
-                protocols: protocols,
+                $expr: {$eq: [ { $year: '$updated' }, updatedYear]}, // TODO check functioning
+                protocols: {$search: protocols},
                 category: category,
                 tags: {$search: tags},
-                rating: {compare: rating}}); // TODO
+                rating: comparison}); // TODO check functioning
             console.log('[API REPOSITORY] operation=searchWithFilters; status=success');
             return result.toJSON();
         } catch (e) {

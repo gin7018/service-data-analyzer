@@ -8,7 +8,7 @@ export class MashupRepository {
     async searchWithFilters({updatedYear, apis, tags} = {}) {
         try {
             const result = await this.mashups.find({
-                updatedYear: updatedYear, // TODO
+                $expr: {$eq: [ { $year: '$updated' }, updatedYear]}, // TODO
                 apis: {$search: apis},
                 tags: {$search: tags}
             });
