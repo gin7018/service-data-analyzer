@@ -1,27 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import {NgForOf} from "@angular/common";
-import {SearchService} from "./search.service";
 
-@Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, NgForOf],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
-})
-export class AppComponent {
-  title = 'frontend';
-
-  result = [
-    "api # 2",
-    "api # 2",
-    "api # 2",
-    "api # 2",
-    "api # 2",
-  ]
-
-  CATEGORY = ['Advertising',     'Answers',
+export const CATEGORIES = ['Advertising',     'Answers',
     'Auctions',         'Backend',         'Blog Search',
     'Blogging',         'Bookmarks',       'Calendar',
     'Catalog',          'Chat',            'Database',
@@ -45,7 +23,7 @@ export class AppComponent {
     'Video',            'Weather',         'Widgets',
     'Wiki'];
 
-  PROTOCOLS = [
+export const PROTOCOLS = [
     '  JSON-RPC',
     ' ActionScript',
     ' Actionscript',
@@ -145,48 +123,4 @@ export class AppComponent {
     'AIM (OSCAR)',
     'AJAX',
     'ActionScript',
-  ];
-
-  constructor(private searchService: SearchService) {
-  }
-
-  fetchApisWithFilters(updatedYear: number, protocols: string[],
-                       category: string[], tags: string[], rating: number, compare: string) {
-    this.result = [];
-    this.searchService.fetchApiWithFilters(updatedYear, protocols, category, tags, rating, compare)
-      .subscribe(results => this.result = results);
-  }
-
-  fetchApisWithKeywords(keywords: string[]) {
-    this.result = [];
-    this.searchService.fetchApiWithKeywords(keywords)
-      .subscribe(results => this.result = results);
-  }
-
-  fetchMashupsWithFilters(updatedYear: number, apisUsed: string[], tags: string[]) {
-    this.result = [];
-    this.searchService.fetchMashupWithFilters(updatedYear, apisUsed, tags)
-      .subscribe(results => this.result = results);
-  }
-
-  fetchMashupsWithKeywords(keywords: string[]) {
-    this.result = [];
-    this.searchService.fetchMashupWithKeywords(keywords)
-      .subscribe(results => this.result = results);
-  }
-
-  fetchTopKApis(k: number) {
-    this.result = [];
-    this.searchService.fetchTopKApis(k)
-      .subscribe(results => this.result = results);
-  }
-
-  fetchTopKMashups(k: number) {
-    this.result = [];
-    this.searchService.fetchTopKMashups(k)
-      .subscribe(results => this.result = results);
-  }
-
-
-
-}
+];
