@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
+
+body {
+  padding: 100px;
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+.title h2 {
+  text-align: center;
+}
+
+.search-bar {
+  margin: auto;
+  width: 100%;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px 20px;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: large;
+}
+
+.section {
+  display: flex;
+  margin-top: 50px;
+}
+
+.filter-bar {
+  width: 30%;
+  display: inline;
+  border: black;
+}
+
+.filter-bar h4, label {
+  padding-top: 20px;
+  font-weight: bold;
+}
+
+.results-area {
+  width: 70%;
+}
+
+.protocols {
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.protocols p, .categories p {
+  padding: 8px 10px;
+  margin: 0;
+}
+
+.protocols p:hover, .categories p:hover {
+  cursor: pointer;
+  background-color: black;
+  color: white;
+
+}
+
+.categories {
+  height: 200px;
+  overflow-y: scroll;
+}
+
+
+
+
+
+
+
