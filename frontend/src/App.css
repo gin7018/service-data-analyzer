@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
 
 body {
-  padding: 100px;
+  padding: 50px;
   font-family: "IBM Plex Sans", sans-serif;
+  height: 700px;
+  /*width: 800px;*/
 }
 
 .title h2 {
@@ -38,7 +40,7 @@ body {
 }
 
 .results-area {
-  width: 70%;
+  width: 700px;
 }
 
 .protocols {
@@ -63,9 +65,17 @@ body {
   overflow-y: scroll;
 }
 
+.results-area {
+  padding-left: 50px;
+  height: 700px;
+  width: 70%;
+  overflow-y: scroll;
+}
 
-
-
-
-
+.results-area pre {
+  width: 400px;
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid black;
+}
 

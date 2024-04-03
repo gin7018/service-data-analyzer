@@ -12,11 +12,11 @@ export function makeSearchApiRouter() {
 
     // TODO rating should have higher than, equal to, lower than
 
-    router.get('/api', (req, res) => {
+    router.get('/api', async (req, res) => {
         try {
             const {updatedYear, protocols, category, tags, rating, compare} = req.query;
 
-            const searchResults = apiRepository.searchWithFilters(
+            const searchResults = await apiRepository.searchWithFilters(
                 {updatedYear, protocols, category, tags, rating, compare}
             )
             console.log(`[SEARCH API] operation=/GET/api; query=${req.query}; results=${searchResults.length}`);
@@ -27,14 +27,14 @@ export function makeSearchApiRouter() {
         }
     })
 
-    router.get('/mashup', (req, res) => {
+    router.get('/mashup', async (req, res) => {
         try {
             const {updatedYear, apisUsed, tags} = req.query;
 
-            const searchResults = mashupRepository.searchWithKeywords(
+            const searchResults = await mashupRepository.searchWithFilters(
                 {updatedYear, apisUsed, tags}
             )
-            console.log(`[SEARCH API] operation=/GET/mashup; query=${req.query}; results=${searchResults.length}`);
+            console.log(`[SEARCH API] operation=/GET/mashup; query=${req.query.toLocaleString()}; results=${searchResults.length}`);
             res.status(200).json(searchResults);
         } catch (e) {
             console.error(`[SEARCH API] operation=/GET/mashup; error=${e.message}`);
@@ -42,17 +42,17 @@ export function makeSearchApiRouter() {
         }
     })
 
-    router.get('/:type/keywords', (req, res) => {
+    router.get('/:type/keywords', async (req, res) => {
         try {
             const { keywords } = req.query;
             const { type } = req.params;
 
             let searchResults = [];
             if (type === 'api') {
-                searchResults = apiRepository.searchWithKeywords(keywords);
+                searchResults = await apiRepository.searchWithKeywords(keywords);
             }
             else if (type === 'mashup') {
-                searchResults = mashupRepository.searchWithKeywords(keywords);
+                searchResults = await mashupRepository.searchWithKeywords(keywords);
             }
             else {
                 console.error(`[SEARCH API] operation=/GET/type/keywords; error=${type} is not a valid record`);
@@ -67,10 +67,10 @@ export function makeSearchApiRouter() {
         }
     })
 
-    router.get('/api/top/:k', (req, res) => {
+    router.get('/api/top/:k', async (req, res) => {
         try {
             const { k } = req.params;
-            let searchResults = apiRepository.getTopKApis(k);
+            let searchResults = await apiRepository.getTopKApis(k);
             console.log(`[SEARCH API] operation=/GET/api/top/${k}; results=${searchResults.length}`);
             res.status(200).json(searchResults);
         } catch (e) {
@@ -79,10 +79,10 @@ export function makeSearchApiRouter() {
         }
     })
 
-    router.get('/mashup/top/:k', (req, res) => {
+    router.get('/mashup/top/:k', async (req, res) => {
         try {
             const { k } = req.params;
-            let searchResults = mashupRepository.getTopKMashups(k);
+            let searchResults = await mashupRepository.getTopKMashups(k);
             console.log(`[SEARCH API] operation=/GET/mashup/top/${k}; results=${searchResults.length}`);
             res.status(200).json(searchResults);
         } catch (e) {

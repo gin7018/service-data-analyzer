@@ -19,7 +19,7 @@ export function makeMashupRecord(db) {
         commentsUrl: {type: String},
         tags: [{type: String}],
         apis: [{type: ApiSchema}],
-        updated: {type: String}
+        updated: {type: Date}
     }));
 }
 

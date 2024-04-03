@@ -2,23 +2,25 @@ import {ApiRecord} from "../index.js";
 
 export class ApiRepository {
     constructor() {
-        this.apis = ApiRecord();
+        this.apis = ApiRecord;
     }
 
-    async searchWithFilters({updatedYear, protocols, category, tags, rating, compare} = {}) {
+    async searchWithFilters({updatedYear, protocols, category, tags, rating} = {}) {
         try {
-            let compareOpp = "$" + compare;
-            let comparison = {};
-            comparison[compareOpp] = rating;
+            let query = {$or: []};
+            let compareOpp = {};
+            compareOpp["$" + rating.slice(0, 2)] = Number(rating.slice(3));
 
-            const result = await this.apis.find({
-                $expr: {$eq: [ { $year: '$updated' }, updatedYear]}, // TODO check functioning
-                protocols: {$search: protocols},
-                category: category,
-                tags: {$search: tags},
-                rating: comparison}); // TODO check functioning
+            if (rating) query.$or.push({rating: compareOpp});
+            if (updatedYear) query.$or.push({$expr: {$eq: [{$year: '$updated'}, updatedYear]}});
+            if (protocols) query.$or.push({protocols: protocols.split(',')});
+            if (category) query.$or.push({category: category.split(',')});
+            if (tags) query.$or.push({tags: tags.split(',')});
+
+
+            const result = await this.apis.find(query);
             console.log('[API REPOSITORY] operation=searchWithFilters; status=success');
-            return result.toJSON();
+            return result.map(res => res.toJSON());
         } catch (e) {
             console.error(`[API REPOSITORY] operation=searchWithFilters; error=${e.message}`);
             return null;
@@ -27,15 +29,16 @@ export class ApiRepository {
 
     async searchWithKeywords(keywords) {
         try {
+            let query = { $regex: new RegExp("^" + keywords.toLowerCase(), "i") }
             const results = await this.apis.find({
                 $or: [
-                    {title: {$search: keywords}},
-                    {summary: {$search: keywords}},
-                    {description: {$search: keywords}}
+                    {title: query},
+                    {summary: query},
+                    {description: query}
                 ]
             });
             console.log('[API REPOSITORY] operation=searchWithKeywords; status=success');
-            return results.toJSON();
+            return results.map(res => res.toJSON());
         } catch (e) {
             console.error(`[API REPOSITORY] operation=searchWithKeywords; error=${e.message}`);
             return null;
@@ -44,9 +47,9 @@ export class ApiRepository {
 
     async getTopKApis(k) {
         try {
-            const results = await this.apis.find({ $query: {}, $orderby: {useCount: -1}}).limit(k);
+            const results = await this.apis.find().sort({ useCount: -1 }).limit(k);
             console.log('[API REPOSITORY] operation=getTopKApis; status=success');
-            return results.toJSON();
+            return results.map(res => res.toJSON());
         } catch (e) {
             console.error(`[API REPOSITORY] operation=getTopKApis; error=${e.message}`);
             return null;

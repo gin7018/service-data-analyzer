@@ -10,13 +10,14 @@ const connection = await mongoose.connect(connection_uri + collection_name);
 export const ApiRecord = makeApiRecord(connection);
 export const MashupRecord = makeMashupRecord(connection);
 
-await ApiRecord.collection.drop();
-console.log('DROPPED THE API COLLECTION');
 
-await MashupRecord.collection.drop();
-console.log('DROPPED THE MASHUP COLLECTION');
+export async function load_data_to_db() {
+    await ApiRecord.collection.drop();
+    console.log('DROPPED THE API COLLECTION');
 
-export function load_data_to_db() {
+    await MashupRecord.collection.drop();
+    console.log('DROPPED THE MASHUP COLLECTION');
+
     load_data(`${process.cwd()}/data/api.txt`, ApiRecord).then(() => {
         console.log('LOADED API RECORDS TO DB');
     });
