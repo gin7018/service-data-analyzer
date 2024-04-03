@@ -4,78 +4,44 @@ body {
   padding: 50px;
   font-family: "IBM Plex Sans", sans-serif;
   height: 700px;
-  /*width: 800px;*/
 }
 
 .title h2 {
   text-align: center;
 }
 
-.search-bar {
-  margin: auto;
-  width: 100%;
-}
-
-.search-bar input {
-  width: 100%;
-  padding: 10px 20px;
-  font-family: "IBM Plex Sans", sans-serif;
-  font-size: large;
-}
-
-.section {
+.results-area {
   display: flex;
-  margin-top: 50px;
-}
-
-.filter-bar {
-  width: 30%;
-  display: inline;
-  border: black;
-}
-
-.filter-bar h4, label {
-  padding-top: 20px;
-  font-weight: bold;
-}
-
-.results-area {
-  width: 700px;
-}
-
-.protocols {
-  height: 200px;
-  overflow-y: scroll;
-}
-
-.protocols p, .categories p {
-  padding: 8px 10px;
-  margin: 0;
-}
-
-.protocols p:hover, .categories p:hover {
-  cursor: pointer;
-  background-color: black;
-  color: white;
-
-}
-
-.categories {
-  height: 200px;
-  overflow-y: scroll;
-}
-
-.results-area {
-  padding-left: 50px;
-  height: 700px;
-  width: 70%;
+  height: 300px;
+  width: 800px;
+  margin-bottom: 50px;
+  border: 1px solid black;
   overflow-y: scroll;
 }
 
 .results-area pre {
-  width: 400px;
+  width: 300px;
   padding: 10px;
   margin: 5px;
   border: 1px solid black;
+}
+
+input {
+  padding: 5px 20px 5px 10px;
+  margin-bottom: 10px;
+  margin-right: 5px;
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+button {
+  padding: 5px 20px;
+  font-family: "IBM Plex Sans", sans-serif;
+  background-color: black;
+  color: white;
+  margin-right: 40px;
+}
+
+form {
+  display: flex;
 }
 

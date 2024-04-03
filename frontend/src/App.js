@@ -1,7 +1,6 @@
 import './App.css';
 import {Component} from "react";
 import './data/filters';
-import {CATEGORIES, PROTOCOLS} from "./data/filters";
 import {SearchService} from "./service/search";
 
 class App extends Component{
@@ -45,7 +44,7 @@ class App extends Component{
         let apisUsed = document.getElementById('apisUsed').value;
         let tags = document.getElementById('tags2').value;
 
-        console.log('values ' + {updatedYear, tags, apisUsed}.toString());
+        console.log('values ' + updatedYear, tags, apisUsed);
         let results = await this.searchService.fetchMashupWithFilters(
             {updatedYear, apisUsed, tags});
         this.setState( () => ({
@@ -85,22 +84,39 @@ class App extends Component{
                 </div>
 
                 <div className="searchApis">
+                    <h2>API SEARCH</h2>
                     <form className="apiForm">
-                        UPDATED YEAR <br/><input id="updated1" type="number"/> <br/>
-                        PROTOCOLS <br/><input id="protocols1" type="text" placeholder="must be comma separated"/> <br/>
-                        CATEGORY <br/><input id="category1" type="text" placeholder=""/> <br/>
-                        TAGS <br/><input id="tags1" type="text" placeholder="must be comma separated"/> <br/>
-                        RATING <br/><input id="rating1" type="text" placeholder="[lt, gt, eq]: <number>"/>
-                    </form> <br/>
+                        <label>
+                            UPDATED YEAR <br/><input id="updated1" type="number"/><br/>
+                        </label>
+                        <label>
+                            PROTOCOLS <br/><input id="protocols1" type="text" placeholder="must be comma separated"/><br/>
+                        </label>
+                        <label>
+                            CATEGORY <br/><input id="category1" type="text" placeholder=""/><br/>
+                        </label>
+                        <label>
+                            TAGS <br/><input id="tags1" type="text" placeholder="must be comma separated"/><br/>
+                        </label>
+                        <label>
+                            RATING <br/><input id="rating1" type="text" placeholder="[lt, gt, eq]: <number>"/><br/>
+                        </label>
+
+                    </form>
                     <button id="submitApiSearch" onClick={() => this.fetchApisWithFilters()}>SUBMIT</button> <br/><br/>
 
+                    <div>
+                        <label>
+                            KEYWORDS <input id="keywords1" type="text" placeholder="must be comma separated"/>
+                            <button id="submitApiKeywordSearch" type="submit" onClick={() =>
+                                this.fetchApisWithKeywords()}>SUBMIT</button> <br/>
+                        </label>
 
-                    KEYWORDS <input id="keywords1" type="text" placeholder="must be comma separated"/>
-                    <button id="submitApiKeywordSearch" type="submit" onClick={() =>
-                        this.fetchApisWithKeywords()}>SUBMIT</button>
-
-                    TOP K APIS <input id="topK1" type="number"/>
-                    <button id="submitTopKSearch" type="submit" onClick={() => this.fetchTopKApis()}>SUBMIT</button>
+                        <label>
+                            TOP K APIS <input id="topK1" type="number"/>
+                            <button id="submitTopKSearch" type="submit" onClick={() => this.fetchTopKApis()}>SUBMIT</button>
+                        </label>
+                    </div>
 
                     <div className="results-area">
                         <div >
@@ -111,20 +127,33 @@ class App extends Component{
                 </div>
 
                 <div className="searchMashups">
+                    <h2>MASHUP SEARCH</h2>
                     <form>
-                        UPDATED YEAR <br/> <input id="updated2" type="number"/> <br/>
-                        APIS USED <br/> <input id="apisUsed" type="text" placeholder="must be comma separated"/> <br/>
-                        TAGS <br/> <input id="tags2" type="text" placeholder="must be comma separated"/> <br/>
+                        <label>
+                            UPDATED YEAR <br/> <input id="updated2" type="number"/> <br/>
+                        </label>
+                        <label>
+                            APIS USED <br/> <input id="apisUsed" type="text" placeholder="must be comma separated"/> <br/>
+                        </label>
+                        <label>
+                            TAGS <br/> <input id="tags2" type="text" placeholder="must be comma separated"/> <br/>
+                        </label>
                     </form>
                     <button id="submitMashupSearch" onClick={() => this.fetchMashupsWithFilters()}>SUBMIT</button> <br/><br/>
 
-                    KEYWORDS <input id="keywords2" type="text" placeholder="must be comma separated"/>
-                    <button id="submitMashupKeywordSearch" type="submit" onClick={() =>
-                        this.fetchMashupsWithKeywords()}>SUBMIT</button>
+                    <div className="topKeyword">
+                        <label>
+                            KEYWORDS <input id="keywords2" type="text" placeholder="must be comma separated"/>
+                            <button id="submitMashupKeywordSearch" type="submit" onClick={() =>
+                                this.fetchMashupsWithKeywords()}>SUBMIT</button>
+                        </label>
 
-                    TOP K MASHUPS<input id="topK2" type="number"/>
-                    <button id="submitTopMashupKSearch" type="submit" onClick={() =>
-                        this.fetchTopKMashups()}>SUBMIT</button>
+                        <label>
+                            TOP K MASHUPS<input id="topK2" type="number"/>
+                            <button id="submitTopMashupKSearch" type="submit" onClick={() =>
+                                this.fetchTopKMashups()}>SUBMIT</button>
+                        </label>
+                    </div>
 
                     <div className="results-area">
                         <div >
@@ -134,32 +163,32 @@ class App extends Component{
 
                 </div>
 
-                <div className="section">
-                    <div className="filter-bar">
+                {/*<div className="section">*/}
+                {/*    <div className="filter-bar">*/}
 
 
-                        <h4>PROTOCOLS</h4>
-                        <div className="protocols">
-                            <div >
-                                {PROTOCOLS.map(protocol => (<p onClick={
-                                    () => this.fetchApisWithFilters({protocols: protocol})
-                                }>{protocol}</p>))}
-                            </div>
-                        </div>
+                {/*        <h4>PROTOCOLS</h4>*/}
+                {/*        <div className="protocols">*/}
+                {/*            <div >*/}
+                {/*                {PROTOCOLS.map(protocol => (<p onClick={*/}
+                {/*                    () => this.fetchApisWithFilters({protocols: protocol})*/}
+                {/*                }>{protocol}</p>))}*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
 
-                        <h4>CATEGORIES</h4>
-                        <div className="categories">
-                            <div >
-                                {CATEGORIES.map(category => (<p onClick={
-                                    () => this.fetchApisWithFilters({category: category})
-                                }>{category}</p>))}
-                            </div>
-                        </div>
-                    </div>
+                {/*        <h4>CATEGORIES</h4>*/}
+                {/*        <div className="categories">*/}
+                {/*            <div >*/}
+                {/*                {CATEGORIES.map(category => (<p onClick={*/}
+                {/*                    () => this.fetchApisWithFilters({category: category})*/}
+                {/*                }>{category}</p>))}*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
 
 
 
-                </div>
+                {/*</div>*/}
 
             </div>
 
